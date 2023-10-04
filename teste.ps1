@@ -4,12 +4,12 @@ $dirRaiz = 'D:\Powershell\Testes'
 cd $dirRaiz
 $dataBase = Get-Date
 $dataBase = $dataBase.AddDays(-31)
-$dataDoArquivo = [Datetime]::ParseExact('01/09/2023', 'dd/MM/yyyy', $null)
+
 
 if ($dataBase -ge $dataDoArquivo) {
-    Write-Host "data base maior igual arquivo"
+    Write-Host "Não excluir o arquivo"
 } else {
-    Write-Host "data base menor"
+    Write-Host "Excluir o arquivo"
 }
 
 Write-Host $dataBase
@@ -34,10 +34,15 @@ foreach ($element in $Text)
     try {
         if ($element.Substring(0,2) -eq "d-" -or $element.Substring(0,2) -eq "-a") {
             $element >> teste3.txt
-            Write-Host $element.Substring(50, ($element.Length -50))
-            $dataArquivo = $element.Substring(14,10)
-            $data = [Datetime]::ParseExact($dataArquivo, 'dd/MM/yyyy', $null)
-            Write-Host $data
+            $nomeItem = $element.Substring(50, ($element.Length -50))
+            $dataString = $element.Substring(14,10)
+            $dataDoArquivo = [Datetime]::ParseExact($dataString, 'dd/MM/yyyy', $null)
+
+            if ($dataBase -ge $dataDoArquivo) {
+                Write-Host "Excluir o item $nomeItem" $dataDoArquivo 
+            } else {
+                Write-Host "Não excluir o item $nomeItem" $dataDoArquivo
+            }
         }
      
     } catch {
